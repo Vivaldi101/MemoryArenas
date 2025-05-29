@@ -34,7 +34,7 @@ static void do_work2(arena temp)
 #if 0
 static size thing_count(arena temp, size count)
 {
-   arena scratch = new(&temp, thing, count);
+   arena scratch = push(&temp, thing, count);
    size s = scratch_size(scratch) / sizeof(typeof(thing));
    size sum = 0;
 
@@ -132,7 +132,7 @@ static void iterate_objs_indexes(arena a, size s)
 {
    for(size i = 0; i < s; ++i)
    {
-      int* n = new(&a, int, 1);
+      int* n = push(&a, int, 1);
       //int* n = malloc(sizeof(int));
 
       *n = 42;
@@ -148,24 +148,24 @@ int main()
    assert(base);
 
    arena a1 = arena_new(base, ints_count*sizeof(int));
-   int* pa1 = new(&a1, int, ints_count);
+   int* pa1 = push(&a1, int, ints_count);
    int* q = pa1;
    for(int i = 0; i < ints_count; ++i)
       pa1[i] = i;
 
-   // TODO: expand inside new
+   // TODO: expand inside push
    size expand_count = 10*sizeof(int);
-   int* w = pa1 = new(&a1, int, ints_count);
+   int* w = pa1 = push(&a1, int, ints_count);
 
    for(int i = 0; i < ints_count; ++i)
       pa1[i] = i*2;
 
-   pa1 = new(&a1, int, ints_count);
+   pa1 = push(&a1, int, ints_count);
 
    for(int i = 0; i < ints_count; ++i)
       pa1[i] = i*4;
 
-   int* r = pa1 = new(&a1, int, ints_count);
+   int* r = pa1 = push(&a1, int, ints_count);
 
    for(int i = 0; i < ints_count; ++i)
       pa1[i] = i*8;
@@ -173,7 +173,7 @@ int main()
    for(int i = 0; i < ints_count-1; ++i)
       assert(pa1[i+1] == 4*w[i+1]);
 
-   int* n = new(&a1, int, ints_count);
+   int* n = push(&a1, int, ints_count);
 
    iterate_objs_indexes(a1, 100000000);
    //iterate_objs_indexes(a1, 100000000);
