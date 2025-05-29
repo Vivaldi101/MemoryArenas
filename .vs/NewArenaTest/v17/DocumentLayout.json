@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Work\\NewArenaTest\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|C:\\Work\\NewArenaTest\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|C:\\Work\\NewArenaTest\\arena.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|solutionrelative:arena.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|C:\\Work\\NewArenaTest\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|solutionrelative:main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{61FFC6BE-27AC-480E-9E74-2F65FFDED3DC}|NewArenaTest.vcxproj|C:\\Work\\NewArenaTest\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -35,27 +35,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "arena.h",
-              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeDocumentMoniker": "arena.h",
-              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeToolTip": "arena.h",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAYwGYAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-20T20:39:46.719Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "main.c",
               "DocumentMoniker": "C:\\Work\\NewArenaTest\\main.c",
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "C:\\Work\\NewArenaTest\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAGUAAAAAAAAAAAAYwHUAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAswJEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-02-16T21:35:35.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "arena.h",
+              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeDocumentMoniker": "arena.h",
+              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeToolTip": "arena.h",
+              "ViewState": "AgIAAGEAAAAAAAAAAAD4v2cAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-20T20:39:46.719Z",
               "EditorCaption": ""
             },
             {

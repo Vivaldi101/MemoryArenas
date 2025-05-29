@@ -86,6 +86,7 @@ typedef struct arena
    //list_head arenas;
 } arena;
 
+// TODO: use GetSystemInfo
 static arena arena_new(void* base, size cap)
 {
    assert(base && cap > 0);
@@ -93,11 +94,25 @@ static arena arena_new(void* base, size cap)
    arena result = {0};
 
    result.beg = VirtualAlloc(base, cap, MEM_COMMIT, PAGE_READWRITE);
-   result.end = (byte*)base + cap;
+   result.end = (byte*)result.beg + cap;
 
    assert(result.beg < result.end);
 
    return result;
+}
+
+static void arena_expand(arena* a, size new_cap)
+{
+   // wp on base pointer
+   arena new_arena = arena_new((byte*)a->end+4096, new_cap);
+
+   assert(new_arena.beg >= a->end);
+
+   a->beg = new_arena.beg; // expanded arena beginning
+   a->end = (byte*)a->beg + new_cap;
+
+   assert(a->beg < a->end);   // invariant
+   assert(a->end == (byte*)a->beg + new_cap);   // post
 }
 
 static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
@@ -106,17 +121,12 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    void* p = (void*)(((uptr)a->beg + (align - 1)) & (-align));
 
    if(count <= 0 || count > ((byte*)a->end - (byte*)p) / alloc_size) // empty or overflow
-   {
-      arena new_arena = arena_new(a->end, count * alloc_size);
-      new_arena.beg = a->end;
-      return new_arena.beg;
-   }
+      abort();
 
-   a->beg = (byte*)p + (count * alloc_size);          // advance arena 
+   a->beg = (byte*)p + (count * alloc_size);                         // advance arena 
 
-   assert(((uptr)p & (align - 1)) == 0);   // aligned result
+   assert(((uptr)p & (align - 1)) == 0);                             // aligned result
 
-   //return (arena){p, a->beg};
    return p;
 }
 

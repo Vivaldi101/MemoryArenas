@@ -104,29 +104,56 @@ static arena arena_join(arena from, arena to)
    return (arena){from.beg, to.end};
 }
 
+typedef struct
+{
+   int32_t* data;
+   ptrdiff_t len;
+   ptrdiff_t cap;
+} int32s;
+
+int32s fibonacci(int32_t max, arena* perm)
+{
+   static int32_t init[] = {0, 1};
+   int32s fib = {0};
+   fib.data = init;
+   fib.len = fib.cap = countof(init);
+
+   for(;;)
+   {
+      int32_t a = fib.data[fib.len - 2];
+      int32_t b = fib.data[fib.len - 1];
+      if(a + b > max)
+         return fib;
+      //*push(&fib, perm) = a + b;
+   }
+}
+
 int main()
 {
    const size arena_size = 1ull << 46;
-   const size page_size = 4096;
    const size ints_count = 4;
 
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
    arena a1 = arena_new(base, ints_count*sizeof(int));
-
-   int* p = new(&a1, int, ints_count+10);
-
-   for(int i = 0; i < ints_count+10; ++i)
-      p[i] = i;
-
-   assert(p + ints_count == (int*)a1.end + ints_count);
-
-   int* q = new(&a1, int, ints_count);
+   int* pa1 = new(&a1, int, ints_count);
+   int* q = pa1;
    for(int i = 0; i < ints_count; ++i)
-      q[i] = i*2;
+      pa1[i] = i;
 
-   assert(q + ints_count == (int*)a1.end);
+   // TODO: expand inside new
+   arena_expand(&a1, ((byte*)a1.end-(byte*)a1.beg) + 10*sizeof(int));
+   int* w = pa1 = new(&a1, byte, 40);
+
+   for(int i = 0; i < ints_count; ++i)
+      pa1[i] = i*2;
+
+   arena_expand(&a1, ((byte*)a1.end-(byte*)a1.beg) + 10*sizeof(int));
+   pa1 = new(&a1, int, ints_count);
+
+   for(int i = 0; i < ints_count; ++i)
+      pa1[i] = i*3;
 
    return 0;
 

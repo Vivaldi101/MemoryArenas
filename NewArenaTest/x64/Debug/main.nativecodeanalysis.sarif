@@ -8,7 +8,7 @@
         "driver": {
           "name": "PREfast",
           "fullName": "MSVC Code Analysis",
-          "version": "14.44.35128.0",
+          "version": "14.44.35207.1",
           "informationUri": "https://aka.ms/cpp/ca"
         }
       },
@@ -26,7 +26,15 @@
             "analysisTarget"
           ],
           "hashes": {
-            "sha-256": "ad26a9b417276e9e112abf1d96f78130f393789b3ae6f4ea880ab32304ea3bd2"
+            "sha-256": "efb461c0500a69313ab7a841581c4fa5ec5893acb80f89c5169388da1c920cd2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/work/newarenatest/list.h"
+          },
+          "hashes": {
+            "sha-256": "d89b99c26d5f57d2982de2af0b5a36e81d0fd7f820cbe0aae3313b718c588cff"
           }
         },
         {
@@ -34,7 +42,7 @@
             "uri": "file:///c:/work/newarenatest/arena.h"
           },
           "hashes": {
-            "sha-256": "4b3dda3921691aafc541f3353224c5f121a3d44bbf21d976219d48e8b24ab36a"
+            "sha-256": "d13eba63cdc65d1451c1f8bfb7abc27111ab7e9f98e1610ec707562564f02081"
           }
         }
       ]
