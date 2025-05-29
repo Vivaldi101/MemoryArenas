@@ -121,7 +121,7 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    void* p = (void*)(((uptr)a->beg + (align - 1)) & (-align));
 
    if(count <= 0 || count > ((byte*)a->end - (byte*)p) / alloc_size) // empty or overflow
-      abort();
+      arena_expand(a, count * alloc_size);
 
    a->beg = (byte*)p + (count * alloc_size);                         // advance arena 
 

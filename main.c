@@ -143,59 +143,24 @@ int main()
       pa1[i] = i;
 
    // TODO: expand inside new
-   arena_expand(&a1, ((byte*)a1.end-(byte*)a1.beg) + 10*sizeof(int));
-   int* w = pa1 = new(&a1, byte, 40);
+   size expand_count = 10*sizeof(int);
+   int* w = pa1 = new(&a1, int, ints_count);
 
    for(int i = 0; i < ints_count; ++i)
       pa1[i] = i*2;
 
-   arena_expand(&a1, ((byte*)a1.end-(byte*)a1.beg) + 10*sizeof(int));
    pa1 = new(&a1, int, ints_count);
 
    for(int i = 0; i < ints_count; ++i)
-      pa1[i] = i*3;
+      pa1[i] = i*4;
 
-   return 0;
+   int* r = pa1 = new(&a1, int, ints_count);
 
-#if 0
-   arena intfoo_arena = new(&base, int, int_count*2);
-   int* intsfoo = intfoo_arena.beg;
-   for(int i = 0; i < int_count*2; ++i)
-      intsfoo[i] = i*123;
+   for(int i = 0; i < ints_count; ++i)
+      pa1[i] = i*8;
 
-   arena int2_arena = new(&intfoo_arena, int, int_count);
-
-   int* ints2 = int2_arena.beg;
-   for(int i = 0; i < int_count; ++i)
-      ints2[i] = i*2;
-
-   arena joined = arena_join(int_arena, int2_arena);
-   int* ints_joined = joined.beg;
-
-   for(int i = 0; i < int_count*2; ++i)
-      printf("%d%s", ints_joined[i], i == int_count-1 ? "\n" : "\t");
-
-   return 0;
-
-   arena ints2 = new(&base, int, 15);
-
-   arena_iterate(ints2, 15, int, t, 
-   { 
-      *t = 42; 
-   });
-
-   arena ints3 = new(&base, int, 1200);
-
-   assert(ints3.beg != ints3.end);
-
-   arena_iterate(ints3, 1200, int, t, 
-   { 
-      *t = 42; 
-   });
-
-   bool r = VirtualFree(pbase_arena, 0, MEM_RELEASE);
-   assert(r);
-#endif
+   for(int i = 0; i < ints_count-1; ++i)
+      assert(pa1[i+1] == 4*w[i+1]);
 
    return 0;
 }
