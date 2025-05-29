@@ -133,6 +133,7 @@ static void iterate_objs_indexes(arena a, size s)
    for(size i = 0; i < s; ++i)
    {
       int* n = new(&a, int, 1);
+      //int* n = malloc(sizeof(int));
 
       *n = 42;
    }
@@ -174,7 +175,8 @@ int main()
 
    int* n = new(&a1, int, ints_count);
 
-   iterate_objs_indexes(a1, 100);
+   iterate_objs_indexes(a1, 100000000);
+   //iterate_objs_indexes(a1, 100000000);
 
    return 0;
 }
