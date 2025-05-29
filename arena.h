@@ -103,7 +103,7 @@ static arena arena_new(void* base, size cap)
 
 static void arena_expand(arena* a, size new_cap)
 {
-   // wp on base pointer
+   assert((uintptr_t)a->end <= ((1ull << 48)-1) - 4096);
    arena new_arena = arena_new((byte*)a->end+4096, new_cap);
 
    assert(new_arena.beg >= a->end);

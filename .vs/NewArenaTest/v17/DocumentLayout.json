@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 198,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -31,6 +31,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "arena.h",
+              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeDocumentMoniker": "arena.h",
+              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeToolTip": "arena.h",
+              "ViewState": "AgIAAGEAAAAAAAAAAAD4v2kAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-20T20:39:46.719Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -43,19 +56,6 @@
               "ViewState": "AgIAAIYAAAAAAAAAAAAswJEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-02-16T21:35:35.401Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "arena.h",
-              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeDocumentMoniker": "arena.h",
-              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeToolTip": "arena.h",
-              "ViewState": "AgIAAGEAAAAAAAAAAAD4v2cAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-20T20:39:46.719Z",
               "EditorCaption": ""
             },
             {
