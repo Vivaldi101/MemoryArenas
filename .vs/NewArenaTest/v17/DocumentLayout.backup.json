@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 198,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,28 +34,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "arena.h",
-              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeDocumentMoniker": "arena.h",
-              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
-              "RelativeToolTip": "arena.h",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAzwIIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-02-20T20:39:46.719Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.c",
               "DocumentMoniker": "C:\\Work\\NewArenaTest\\main.c",
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "C:\\Work\\NewArenaTest\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAI0AAAAAAAAAAIAywKQAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAAALAAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-02-16T21:35:35.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "arena.h",
+              "DocumentMoniker": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeDocumentMoniker": "arena.h",
+              "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
+              "RelativeToolTip": "arena.h",
+              "ViewState": "AgIAAHUAAAAAAAAAAIAywIoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-20T20:39:46.719Z",
               "EditorCaption": ""
             },
             {
@@ -66,7 +66,7 @@
               "RelativeDocumentMoniker": "list.h",
               "ToolTip": "C:\\Work\\NewArenaTest\\list.h",
               "RelativeToolTip": "list.h",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAYwBEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-05-28T17:28:20.595Z"
             }

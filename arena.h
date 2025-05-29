@@ -19,6 +19,9 @@ do { \
 
 #define arena_t(a) typeof(a)
 
+#define page_size (4096)
+#define align_page_size (4096 -1)
+
 #define scratch_count_left(a, s) (size)(((a).end - (a).beg) / (s))
 #define arena_end(a, p) ((byte*)(a)->end == (byte*)(p))
 #define scratch_end(a, p) ((byte*)(a).end == (byte*)(p))
@@ -91,6 +94,8 @@ static arena arena_new(void* base, size cap)
 {
    assert(base && cap > 0);
 
+   cap = (cap + align_page_size) & ~align_page_size; // align to page size
+
    arena result = {0};
 
    result.beg = VirtualAlloc(base, cap, MEM_COMMIT, PAGE_READWRITE);
@@ -103,8 +108,8 @@ static arena arena_new(void* base, size cap)
 
 static void arena_expand(arena* a, size new_cap)
 {
-   assert((uintptr_t)a->end <= ((1ull << 48)-1) - 4096);
-   arena new_arena = arena_new((byte*)a->end+4096, new_cap);
+   assert((uintptr_t)a->end <= ((1ull << 48)-1) - page_size);
+   arena new_arena = arena_new((byte*)a->end+page_size, new_cap);
 
    assert(new_arena.beg >= a->end);
 
@@ -121,7 +126,10 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    void* p = (void*)(((uptr)a->beg + (align - 1)) & (-align));
 
    if(count <= 0 || count > ((byte*)a->end - (byte*)p) / alloc_size) // empty or overflow
+   {
       arena_expand(a, count * alloc_size);
+      p = a->beg;
+   }
 
    a->beg = (byte*)p + (count * alloc_size);                         // advance arena 
 
@@ -130,6 +138,7 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    return p;
 }
 
-static void arena_free(arena* a)
+static int arena_reset(arena* a)
 {
+   return VirtualAlloc(a->beg, (byte*)a->end - (byte*)a->beg, MEM_RESET, PAGE_READWRITE) != 0;
 }

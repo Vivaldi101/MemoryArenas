@@ -128,6 +128,16 @@ int32s fibonacci(int32_t max, arena* perm)
    }
 }
 
+static void iterate_objs_indexes(arena a, size s)
+{
+   for(size i = 0; i < s; ++i)
+   {
+      int* n = new(&a, int, 1);
+
+      *n = 42;
+   }
+}
+
 int main()
 {
    const size arena_size = 1ull << 46;
@@ -161,6 +171,10 @@ int main()
 
    for(int i = 0; i < ints_count-1; ++i)
       assert(pa1[i+1] == 4*w[i+1]);
+
+   int* n = new(&a1, int, ints_count);
+
+   iterate_objs_indexes(a1, 100);
 
    return 0;
 }
