@@ -136,13 +136,19 @@ int main()
 
    defer(a = arena_new(base, page_size), arena_decommit(&a))
    {
-      const size total = page_size;
+      const size total = page_size*3;
       int* pa = a.beg;
       push_objs_indexes(&a, total, 42);
+
+      for(size i = 0; i < total; ++i)
+         assert(pa[i] == 42);
 
       arena b = arena_new(a.end, page_size);
       int* pb = b.beg;
       push_objs_indexes(&b, total, 99);
+
+      for(size i = 0; i < total; ++i)
+         assert(pb[i] == 99);
 
       arena_decommit(&b);
    }
