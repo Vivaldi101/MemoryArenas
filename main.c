@@ -175,10 +175,13 @@ int main()
    int* n = push(&a1, int, ints_count);
 #endif
 
-   iterate_objs_indexes(a1, 8000);
-   //iterate_objs_indexes(a1, 100000000);
+   size s = 100000000;
+   iterate_objs_indexes(a1, s);
 
-   int* p = a1.beg;
+   int* n = a1.beg;
+
+   //for(size i = 0; i < s; ++i)
+      //assert(n[i] == 42);
 
    return 0;
 }
