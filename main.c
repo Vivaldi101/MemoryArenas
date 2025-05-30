@@ -133,8 +133,6 @@ static void iterate_objs_indexes(arena a, size s)
    for(size i = 0; i < s; ++i)
    {
       int* n = push(&a, int, 1);
-      //int* n = malloc(sizeof(int));
-
       *n = 42;
    }
 }
@@ -147,7 +145,8 @@ int main()
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
-   arena a1 = arena_new(base, ints_count*sizeof(int));
+   arena a1 = arena_new(base, 4096);
+#if 0
    int* pa1 = push(&a1, int, ints_count);
    int* q = pa1;
    for(int i = 0; i < ints_count; ++i)
@@ -174,9 +173,12 @@ int main()
       assert(pa1[i+1] == 4*w[i+1]);
 
    int* n = push(&a1, int, ints_count);
+#endif
 
-   iterate_objs_indexes(a1, 100000000);
+   iterate_objs_indexes(a1, 8000);
    //iterate_objs_indexes(a1, 100000000);
+
+   int* p = a1.beg;
 
    return 0;
 }

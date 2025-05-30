@@ -94,7 +94,7 @@ static arena arena_new(void* base, size cap)
 {
    assert(base && cap > 0);
 
-   cap = (cap + align_page_size) & ~align_page_size; // align to page size
+   //cap = (cap + align_page_size) & ~align_page_size; // align to page size
 
    arena result = {0};
 
@@ -109,9 +109,10 @@ static arena arena_new(void* base, size cap)
 static void arena_expand(arena* a, size new_cap)
 {
    assert((uintptr_t)a->end <= ((1ull << 48)-1) - page_size);
-   arena new_arena = arena_new((byte*)a->end+page_size, new_cap);
+   arena new_arena = arena_new((byte*)a->end+page_size-1, new_cap);
+   new_arena.beg = a->end;
 
-   assert(new_arena.beg >= a->end);
+   assert(new_arena.beg == a->end);
 
    a->beg = new_arena.beg; // expanded arena beginning
    a->end = (byte*)a->beg + new_cap;
@@ -127,7 +128,7 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
 
    if(count <= 0 || count > ((byte*)a->end - (byte*)p) / alloc_size) // empty or overflow
    {
-      arena_expand(a, count * alloc_size + page_size);
+      arena_expand(a, count * alloc_size);
       p = a->beg;
    }
 

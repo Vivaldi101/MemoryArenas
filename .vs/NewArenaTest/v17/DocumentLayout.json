@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "main.c",
               "ToolTip": "C:\\Work\\NewArenaTest\\main.c",
               "RelativeToolTip": "main.c",
-              "ViewState": "AgIAAJ0AAAAAAAAAAAAAAIYAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAJ8AAAAAAAAAAIAywLYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
               "WhenOpened": "2025-02-16T21:35:35.401Z",
               "EditorCaption": ""
@@ -53,7 +53,7 @@
               "RelativeDocumentMoniker": "arena.h",
               "ToolTip": "C:\\Work\\NewArenaTest\\arena.h",
               "RelativeToolTip": "arena.h",
-              "ViewState": "AgIAACsAAAAAAAAAAAAYwDIAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAzwIsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-02-20T20:39:46.719Z",
               "EditorCaption": ""
@@ -68,7 +68,8 @@
               "RelativeToolTip": "list.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-05-28T17:28:20.595Z"
+              "WhenOpened": "2025-05-28T17:28:20.595Z",
+              "EditorCaption": ""
             }
           ]
         }
