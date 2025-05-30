@@ -180,8 +180,5 @@ int main()
 
    int* n = a1.beg;
 
-   //for(size i = 0; i < s; ++i)
-      //assert(n[i] == 42);
-
    return 0;
 }
