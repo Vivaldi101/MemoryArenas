@@ -140,45 +140,17 @@ static void iterate_objs_indexes(arena a, size s)
 int main()
 {
    const size arena_size = 1ull << 46;
-   const size ints_count = 4;
 
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
-   arena a1 = arena_new(base, 4096);
-#if 0
-   int* pa1 = push(&a1, int, ints_count);
-   int* q = pa1;
-   for(int i = 0; i < ints_count; ++i)
-      pa1[i] = i;
-
-   // TODO: expand inside push
-   size expand_count = 10*sizeof(int);
-   int* w = pa1 = push(&a1, int, ints_count);
-
-   for(int i = 0; i < ints_count; ++i)
-      pa1[i] = i*2;
-
-   pa1 = push(&a1, int, ints_count);
-
-   for(int i = 0; i < ints_count; ++i)
-      pa1[i] = i*4;
-
-   int* r = pa1 = push(&a1, int, ints_count);
-
-   for(int i = 0; i < ints_count; ++i)
-      pa1[i] = i*8;
-
-   for(int i = 0; i < ints_count-1; ++i)
-      assert(pa1[i+1] == 4*w[i+1]);
-
-   int* n = push(&a1, int, ints_count);
-#endif
-
+   arena a = arena_new(base, 4096);
    size s = 100000000;
-   iterate_objs_indexes(a1, s);
+   iterate_objs_indexes(a, s);
 
-   int* n = a1.beg;
+   int* p = a.beg;
+   for(size i = 0; i < s; ++i)
+      assert(p[i] == 42);
 
    return 0;
 }
