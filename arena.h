@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <assert.h>
 #include <string.h>
+#include <stdbool.h>
 #include <windows.h>
 
 #include "list.h"
@@ -139,7 +140,12 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    return p;
 }
 
-static int arena_reset(arena* a)
+static bool arena_reset(arena* a)
 {
    return VirtualAlloc(a->beg, (byte*)a->end - (byte*)a->beg, MEM_RESET, PAGE_READWRITE) != 0;
+}
+
+static bool arena_decommit(arena* a)
+{
+   return VirtualFree(a->beg, 0, MEM_DECOMMIT) != 0;
 }

@@ -1,10 +1,15 @@
-#include "list.h"
-#include "arena.h"
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "list.h"
+#include "arena.h"
+
 #define implies(p, q) (!(p) || (q))
 #define iff(p, q) (implies(p, q) && implies(q, p))
+
+#define defer(begin, end) int (_i_); for((_i_) = (begin, 0); !(_i_); ++(_i_), end)
+#define ensure(begin, end) int (_i_); assert(begin); for((_i_) = ((begin), 0); !(_i_); ++(_i_), assert(end))
 
 typedef struct thing
 {
@@ -124,7 +129,9 @@ int32s fibonacci(int32_t max, arena* perm)
       int32_t b = fib.data[fib.len - 1];
       if(a + b > max)
          return fib;
+
       //*push(&fib, perm) = a + b;
+      int32s* p = push(perm, int32s, 1);
    }
 }
 
@@ -137,6 +144,16 @@ static void iterate_objs_indexes(arena a, size s)
    }
 }
 
+static void test1(arena a)
+{
+   size s = 100000000;
+   iterate_objs_indexes(a, s);
+
+   int* p = a.beg;
+   for(size i = 0; i < s; ++i)
+      assert(p[i] == 42);
+}
+
 int main()
 {
    const size arena_size = 1ull << 46;
@@ -144,13 +161,19 @@ int main()
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
-   arena a = arena_new(base, 4096);
-   size s = 100000000;
-   iterate_objs_indexes(a, s);
+   arena a = {};
+   defer(a = arena_new(base, 4096), arena_decommit(&a))
+   {
+      iterate_objs_indexes(a, 100000000);
 
-   int* p = a.beg;
-   for(size i = 0; i < s; ++i)
-      assert(p[i] == 42);
+      bool r = arena_reset(&a);
+      assert(r);
+      r = arena_decommit(&a);
+      assert(r);
+
+      a = arena_new(base, 4096);
+      iterate_objs_indexes(a, 1000);
+   }
 
    return 0;
 }
