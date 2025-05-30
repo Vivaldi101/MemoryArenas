@@ -131,6 +131,8 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    {
       arena_expand(a, ((count * alloc_size) + align_page_size) & ~align_page_size);
       p = a->beg;
+
+      p = (void*)(((uptr)a->beg + (align - 1)) & (-align));
    }
 
    a->beg = (byte*)p + (count * alloc_size);                         // advance arena 

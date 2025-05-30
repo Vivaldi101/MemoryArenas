@@ -135,7 +135,7 @@ int32s fibonacci(int32_t max, arena* perm)
    }
 }
 
-static void iterate_objs_indexes(arena a, size s)
+static void iterate_objs_indexes42(arena a, size s)
 {
    for(size i = 0; i < s; ++i)
    {
@@ -144,14 +144,13 @@ static void iterate_objs_indexes(arena a, size s)
    }
 }
 
-static void test1(arena a)
+static void iterate_objs_indexes99(arena a, size s)
 {
-   size s = 100000000;
-   iterate_objs_indexes(a, s);
-
-   int* p = a.beg;
    for(size i = 0; i < s; ++i)
-      assert(p[i] == 42);
+   {
+      int* n = push(&a, int, 1);
+      *n = 99;
+   }
 }
 
 int main()
@@ -164,15 +163,13 @@ int main()
    arena a = {};
    defer(a = arena_new(base, 4096), arena_decommit(&a))
    {
-      iterate_objs_indexes(a, 100000000);
+      size s = 42*sizeof(int);
+      iterate_objs_indexes42(a, s/sizeof(int));
 
-      bool r = arena_reset(&a);
-      assert(r);
-      r = arena_decommit(&a);
-      assert(r);
+      arena b = arena_new(a.end, s);
+      iterate_objs_indexes99(b, s/sizeof(int));
 
-      a = arena_new(base, 4096);
-      iterate_objs_indexes(a, 1000);
+      arena_decommit(&b);
    }
 
    return 0;
