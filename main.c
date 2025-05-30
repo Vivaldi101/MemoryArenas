@@ -116,40 +116,12 @@ typedef struct
    ptrdiff_t cap;
 } int32s;
 
-int32s fibonacci(int32_t max, arena* perm)
-{
-   static int32_t init[] = {0, 1};
-   int32s fib = {0};
-   fib.data = init;
-   fib.len = fib.cap = countof(init);
-
-   for(;;)
-   {
-      int32_t a = fib.data[fib.len - 2];
-      int32_t b = fib.data[fib.len - 1];
-      if(a + b > max)
-         return fib;
-
-      //*push(&fib, perm) = a + b;
-      int32s* p = push(perm, int32s, 1);
-   }
-}
-
-static void iterate_objs_indexes42(arena a, size s)
+static void push_objs_indexes(arena* a, size s, int v)
 {
    for(size i = 0; i < s; ++i)
    {
-      int* n = push(&a, int, 1);
-      *n = 42;
-   }
-}
-
-static void iterate_objs_indexes99(arena a, size s)
-{
-   for(size i = 0; i < s; ++i)
-   {
-      int* n = push(&a, int, 1);
-      *n = 99;
+      int* n = push(a, int);
+      *n = v;
    }
 }
 
@@ -160,14 +132,17 @@ int main()
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
-   arena a = {};
-   defer(a = arena_new(base, 4096), arena_decommit(&a))
-   {
-      size s = 42*sizeof(int);
-      iterate_objs_indexes42(a, s/sizeof(int));
+   arena a = arena_new(base, page_size);
 
-      arena b = arena_new(a.end, s);
-      iterate_objs_indexes99(b, s/sizeof(int));
+   defer(a = arena_new(base, page_size), arena_decommit(&a))
+   {
+      const size total = page_size;
+      int* pa = a.beg;
+      push_objs_indexes(&a, total, 42);
+
+      arena b = arena_new(a.end, page_size);
+      int* pb = b.beg;
+      push_objs_indexes(&b, total, 99);
 
       arena_decommit(&b);
    }
