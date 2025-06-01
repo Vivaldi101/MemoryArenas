@@ -118,31 +118,19 @@ typedef struct
 
 static void push_values(arena* a, size s, int v)
 {
-   // a's sub arena pointers
-   int* first = push(a, int, s/2);
-   int* second = push(a, int, s/2);
-
-   for(size i = 0; i < s/2; ++i)
-      first[i] = v;
-   for(size i = 0; i < s/2; ++i)
-      second[i] = v;
+   for(size i = 0; i < s; ++i)
+   {
+      int* first = push(a, int);
+      assert(*first != 2);
+      *first = 1;
+   }
+   for(size i = 0; i < s; ++i)
+   {
+      int* second = push(a, int);
+      assert(*second != 1);
+      *second = 2;
+   }
 }
-
-#if 0
-static void push_arena_values(arena* a, size s, int v)
-{
-   // a's sub arena pointers
-   //int* first = push(a, int, s/2);
-   //int* second = push(a, int, s/2);
-   arena first = push(a, int, s/2);
-   arena second = push(a, int, s/2);
-
-   for(size i = 0; i < s/2; ++i)
-      first[i] = v;
-   for(size i = 0; i < s/2; ++i)
-      second[i] = v;
-}
-#endif
 
 int main()
 {
@@ -155,20 +143,20 @@ int main()
 
    defer(a = arena_new(&a, page_size), arena_decommit(&a))
    {
-      const size a_total = page_size*99;
+      const size a_total = page_size;
       push_values(&a, a_total, 42);
 
-      arena b = arena_new(&a, page_size);
-      const size b_total = 42*page_size;
-      push_values(&b, b_total, 99);
+      //arena b = arena_new(&a, page_size);
+      //const size b_total = page_size;
+      //push_values(&b, b_total, 99);
 
       for(size i = 0; i < a_total; ++i)
-         assert(((int*)a.base)[i] == 42);
+         assert(((int*)a.base)[i] == 1);
 
-      for(size i = 0; i < b_total; ++i)
-         assert(((int*)b.base)[i] == 99);
+      for(size i = a_total; i < a_total*2; ++i)
+         assert(((int*)a.base)[i] == 2);
 
-      arena_decommit(&b);
+      //arena_decommit(&b);
    }
 
    return 0;

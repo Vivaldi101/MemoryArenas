@@ -90,10 +90,20 @@ typedef struct arena
    byte* base;
 } arena;
 
+static bool hw_is_virtual_memory_commited(void* address)
+{
+   MEMORY_BASIC_INFORMATION mbi;
+   if(VirtualQuery(address, &mbi, sizeof(mbi)) == 0)
+      return false;
+
+   return mbi.State == MEM_COMMIT;
+}
+
 // TODO: use GetSystemInfo
 static arena arena_new(arena* base, size cap)
 {
    assert(base->end && cap > 0);
+   assert(!hw_is_virtual_memory_commited(base->end));
 
    arena result = {0};
 
