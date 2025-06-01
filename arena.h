@@ -49,9 +49,9 @@ do { \
 
 #define newx(a,b,c,d,e,...) e
 #define push(...)            newx(__VA_ARGS__,new4,new3,new2)(__VA_ARGS__)
-#define new2(a, t)          alloc(a, sizeof(t), __alignof(t), 1, 0)
-#define new3(a, t, n)       alloc(a, sizeof(t), __alignof(t), n, 0)
-#define new4(a, t, n, f)    alloc(a, sizeof(t), __alignof(t), n, f)
+#define new2(a, t)          (t*)alloc(a, sizeof(t), __alignof(t), 1, 0)
+#define new3(a, t, n)       (t*)alloc(a, sizeof(t), __alignof(t), n, 0)
+#define new4(a, t, n, f)    (t*)alloc(a, sizeof(t), __alignof(t), n, f)
 
 #define newx_size(a,b,c,d,e,...) e
 #define new_size(...)            newx_size(__VA_ARGS__,new4_size,new3_size,new2_size)(__VA_ARGS__)
@@ -87,15 +87,13 @@ typedef struct arena
 {
    void* beg;
    void* end;  // one past the end
-   //list_head arenas;
+   byte* base;
 } arena;
 
 // TODO: use GetSystemInfo
 static arena arena_new(void* base, size cap)
 {
    assert(base && cap > 0);
-
-   //cap = (cap + align_page_size) & ~align_page_size; // align to page size
 
    arena result = {0};
 
@@ -111,7 +109,6 @@ static void arena_expand(arena* a, size new_cap)
 {
    assert((uintptr_t)a->end <= ((1ull << 48)-1) - page_size);
    arena new_arena = arena_new((byte*)a->end, new_cap);
-   new_arena.beg = a->end;
 
    assert(new_arena.beg == a->end);
 
@@ -138,6 +135,9 @@ static void* alloc(arena* a, size alloc_size, size align, size count, u32 flag)
    a->beg = (byte*)p + (count * alloc_size);                         // advance arena 
 
    assert(((uptr)p & (align - 1)) == 0);                             // aligned result
+
+   void* base = a->base;
+   a->base = !base ? p : base;
 
    return p;
 }

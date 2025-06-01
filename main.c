@@ -116,14 +116,33 @@ typedef struct
    ptrdiff_t cap;
 } int32s;
 
-static void push_objs_indexes(arena* a, size s, int v)
+static void push_values(arena* a, size s, int v)
 {
-   for(size i = 0; i < s; ++i)
-   {
-      int* n = push(a, int);
-      *n = v;
-   }
+   // a's sub arena pointers
+   int* first = push(a, int, s/2);
+   int* second = push(a, int, s/2);
+
+   for(size i = 0; i < s/2; ++i)
+      first[i] = v;
+   for(size i = 0; i < s/2; ++i)
+      second[i] = v;
 }
+
+#if 0
+static void push_arena_values(arena* a, size s, int v)
+{
+   // a's sub arena pointers
+   //int* first = push(a, int, s/2);
+   //int* second = push(a, int, s/2);
+   arena first = push(a, int, s/2);
+   arena second = push(a, int, s/2);
+
+   for(size i = 0; i < s/2; ++i)
+      first[i] = v;
+   for(size i = 0; i < s/2; ++i)
+      second[i] = v;
+}
+#endif
 
 int main()
 {
@@ -136,19 +155,18 @@ int main()
 
    defer(a = arena_new(base, page_size), arena_decommit(&a))
    {
-      const size total = page_size*3;
-      int* pa = a.beg;
-      push_objs_indexes(&a, total, 42);
+      const size a_total = page_size*99;
+      push_values(&a, a_total, 42);
 
-      for(size i = 0; i < total; ++i)
-         assert(pa[i] == 42);
+      arena b = arena_new(a.beg, page_size);
+      const size b_total = 42*page_size;
+      push_values(&b, b_total, 99);
 
-      arena b = arena_new(a.end, page_size);
-      int* pb = b.beg;
-      push_objs_indexes(&b, total, 99);
+      for(size i = 0; i < a_total; ++i)
+         assert(((int*)a.base)[i] == 42);
 
-      for(size i = 0; i < total; ++i)
-         assert(pb[i] == 99);
+      for(size i = 0; i < b_total; ++i)
+         assert(((int*)b.base)[i] == 99);
 
       arena_decommit(&b);
    }
