@@ -91,13 +91,13 @@ typedef struct arena
 } arena;
 
 // TODO: use GetSystemInfo
-static arena arena_new(void* base, size cap)
+static arena arena_new(arena* base, size cap)
 {
-   assert(base && cap > 0);
+   assert(base->end && cap > 0);
 
    arena result = {0};
 
-   result.beg = VirtualAlloc(base, cap, MEM_COMMIT, PAGE_READWRITE);
+   result.beg = VirtualAlloc(base->end, cap, MEM_COMMIT, PAGE_READWRITE);
    result.end = (byte*)result.beg + cap;
 
    assert(result.beg < result.end);
@@ -108,7 +108,7 @@ static arena arena_new(void* base, size cap)
 static void arena_expand(arena* a, size new_cap)
 {
    assert((uintptr_t)a->end <= ((1ull << 48)-1) - page_size);
-   arena new_arena = arena_new((byte*)a->end, new_cap);
+   arena new_arena = arena_new(a, new_cap);
 
    assert(new_arena.beg == a->end);
 

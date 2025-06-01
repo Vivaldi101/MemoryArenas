@@ -151,14 +151,14 @@ int main()
    void* base = VirtualAlloc(0, arena_size, MEM_RESERVE, PAGE_READWRITE);
    assert(base);
 
-   arena a = arena_new(base, page_size);
+   arena a = arena_new(&(arena){.end = base}, page_size);
 
-   defer(a = arena_new(base, page_size), arena_decommit(&a))
+   defer(a = arena_new(&a, page_size), arena_decommit(&a))
    {
       const size a_total = page_size*99;
       push_values(&a, a_total, 42);
 
-      arena b = arena_new(a.beg, page_size);
+      arena b = arena_new(&a, page_size);
       const size b_total = 42*page_size;
       push_values(&b, b_total, 99);
 
